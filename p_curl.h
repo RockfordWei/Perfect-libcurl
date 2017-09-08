@@ -110,5 +110,14 @@ static CURLcode curl_form_post(CURL * handle, struct curl_httppost * post) {
 	return curl_easy_setopt(handle, CURLOPT_HTTPPOST, post);
 }
 
+typedef int (*curl_timerfunc)(CURLM * multi, long timeout_ms, void * userp);
+
+extern inline CURLMcode curl_multi_set_timedata(CURLM * handle, void * curlObj) {
+	return curl_multi_setopt(handle, CURLMOPT_TIMERDATA, curlObj);
+}
+
+extern inline CURLMcode curl_multi_set_timefunc(CURLM * handle, curl_timerfunc timer) {
+	return curl_multi_setopt(handle, CURLMOPT_TIMERFUNCTION, timer);
+}
 
 #endif
